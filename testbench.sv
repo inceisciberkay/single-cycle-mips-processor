@@ -1,0 +1,41 @@
+`timescale 1ns / 1ps
+
+module testbench ();
+
+  logic clk, reset;
+  logic [ 4:0] inst_addr;
+  logic [ 4:0] next_inst_addr;
+  logic [15:0] curr_inst;
+  logic [ 3:0] addr_on_dm;
+  logic [ 7:0] data_on_dm;
+
+  top dut (
+      .clk(clk),
+      .reset(reset),
+      .inst_addr(inst_addr),
+      .next_inst_addr(next_inst_addr),
+      .curr_inst(curr_inst),
+      .addr_on_dm(addr_on_dm),
+      .data_on_dm(data_on_dm)
+  );
+
+  initial begin
+    $dumpfile("testbench.vcd");
+    $dumpvars(0, testbench);
+
+    clk   = 0;
+    reset = 1;
+    #1;
+    clk = 1;
+    #1;
+    reset = 0;
+
+    for (int i = 0; i < 100; i++) begin
+      #5;
+      clk = ~clk;
+    end
+
+    $display("Test Complete");
+  end
+
+endmodule
