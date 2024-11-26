@@ -2,10 +2,10 @@
 
 module controller (
     input logic [2:0] op,
-    output logic memWrite,
-    output logic regWrite,
+    output logic memW,
+    output logic regW,
     output logic aluF,
-    output logic memToReg,
+    output logic mem_to_reg,
     output logic addition,
     output logic branch,
     output logic halt
@@ -13,7 +13,7 @@ module controller (
 
   logic [6:0] controls;
 
-  assign {regWrite, memWrite, memToReg, addition, aluF, branch, halt} = controls;
+  assign {regW, memW, mem_to_reg, addition, aluF, branch, halt} = controls;
 
   always_comb
     case (op)

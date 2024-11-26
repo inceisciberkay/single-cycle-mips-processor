@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module alu (
+module ALU (
     input logic [7:0] a,
     input logic [7:0] b,
     input logic f,

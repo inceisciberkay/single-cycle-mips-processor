@@ -3,7 +3,7 @@
 module testbench ();
 
   logic clk, reset;
-  logic [ 4:0] inst_addr;
+  logic [ 4:0] curr_inst_addr;
   logic [ 4:0] next_inst_addr;
   logic [15:0] curr_inst;
   logic [ 3:0] addr_on_dm;
@@ -12,7 +12,7 @@ module testbench ();
   top dut (
       .clk(clk),
       .reset(reset),
-      .inst_addr(inst_addr),
+      .curr_inst_addr(curr_inst_addr),
       .next_inst_addr(next_inst_addr),
       .curr_inst(curr_inst),
       .addr_on_dm(addr_on_dm),
@@ -20,7 +20,7 @@ module testbench ();
   );
 
   initial begin
-    $dumpfile("testbench.vcd");
+    $dumpfile("sim.vcd");
     $dumpvars(0, testbench);
 
     clk   = 0;

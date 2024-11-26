@@ -3,66 +3,66 @@
 module top (
     input logic clk,
     input logic reset,
-    output logic [4:0] inst_addr,
+    output logic [4:0] curr_inst_addr,
     output logic [4:0] next_inst_addr,
     output logic [15:0] curr_inst,
     output logic [3:0] addr_on_dm,
     output logic [7:0] data_on_dm
 );
 
-  logic pcBranch;
-  logic memWrite;
+  logic pc_branch;
+  logic memW;
   logic halt;
 
-  logic [3:0] writeAddress;
-  logic [3:0] writeAddressDM;
-  assign writeAddress = writeAddressDM;
+  logic [3:0] write_addr;
+  logic [3:0] write_addr_dm;
+  assign write_addr = write_addr_dm;
 
-  logic [3:0] readAddress;
-  assign readAddress = curr_inst[3:0];
+  logic [3:0] read_addr;
+  assign read_addr = curr_inst[3:0];
 
-  logic [7:0] writeData;
-  logic [7:0] readData;
+  logic [7:0] write_data;
+  logic [7:0] read_data;
 
-  program_counter pc (
+  PC pc (
       .clk(clk),
       .enable(1'b1),
       .reset(reset),
-      .nextInstructionAddress(next_inst_addr),
-      .pcSrc(pcBranch),
+      .next_inst_addr(next_inst_addr),
+      .pc_src(pc_branch),
       .halt(halt),
-      .currentInstructionAddress(inst_addr)
+      .curr_inst_addr(curr_inst_addr)
   );
 
   instruction_memory im (
-      .readAddress(inst_addr),
-      .readData(curr_inst)
+      .read_addr(curr_inst_addr),
+      .read_data(curr_inst)
   );
 
   mips spc (
       .clk(clk),
       .reset(reset),
-      .instruction(curr_inst),
-      .dataFromMemory(readData),
-      .currentInstructionAddress(inst_addr),
-      .nextInstructionAddress(next_inst_addr),
-      .memWrite(memWrite),
-      .writeAddressDM(writeAddressDM),
-      .pcBranch(pcBranch),
+      .curr_inst(curr_inst),
+      .read_data_dm(read_data),
+      .curr_inst_addr(curr_inst_addr),
+      .next_inst_addr(next_inst_addr),
+      .memW(memW),
+      .write_addr_dm(write_addr_dm),
+      .pc_branch(pc_branch),
       .halt(halt),
-      .writeDataDM(writeData)
+      .write_data_dm(write_data)
   );
 
   data_memory dm (
       .clk(clk),
-      .writeEnable(memWrite),
+      .write_enable(memW),
       .reset(reset),
-      .writeAddress(writeAddress),
-      .writeData(writeData),
-      .readAddress1(readAddress),
-      .readAddress2(addr_on_dm),
-      .readData1(readData),
-      .readData2(data_on_dm)
+      .write_addr(write_addr),
+      .write_data(write_data),
+      .read_addr_1(read_addr),
+      .read_addr_2(addr_on_dm),
+      .read_data_1(read_data),
+      .read_data_2(data_on_dm)
   );
 
 endmodule

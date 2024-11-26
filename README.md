@@ -1,3 +1,3 @@
-1) iverilog -g2012 -I src/ testbench.sv src/*.sv -o testbench.vvp
-2) vvp testbench.vvp
-3) Examine .vcd file using GTKWave
+1) iverilog -g2012 src/testbench.sv src/top.sv src/common/*.sv -o sim.vvp
+2) vvp sim.vvp
+3) Examine sim.vcd file using GTKWave

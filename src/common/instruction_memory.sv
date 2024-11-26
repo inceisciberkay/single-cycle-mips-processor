@@ -2,13 +2,13 @@
 
 // 32x16
 module instruction_memory (
-    input  logic [ 4:0] readAddress,
-    output logic [15:0] readData
+    input  logic [ 4:0] read_addr,
+    output logic [15:0] read_data
 );
 
   logic [15:0] memory[32];
 
-  assign readData = memory[readAddress];
+  assign read_data = memory[read_addr];
 
   initial begin
     memory[0] = 16'b001_1_0000_00000100;  // rf[0] = 4
