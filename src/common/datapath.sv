@@ -11,6 +11,7 @@ module datapath (
     input logic addition,
     input logic branch,
     input logic [4:0] curr_inst_addr,
+    output logic [3:0] read_addr_dmem,
     output logic [3:0] write_addr_dmem,
     output logic [4:0] next_inst_addr,
     output logic pc_branch,
@@ -101,5 +102,7 @@ module datapath (
       .y(aluR),
       .zero(zero)
   );
+
+  assign read_addr_dmem = curr_inst[3:0];
 
 endmodule

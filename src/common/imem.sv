@@ -10,6 +10,7 @@ module imem (
 
   assign read_data = memory[read_addr];
 
+  // program that calculates rf[rf[0]] * rf[rf[1]] and stores in dm[15]
   initial begin
     memory[0] = 16'b001_1_0000_00000100;  // rf[0] = 4
     memory[1] = 16'b001_1_0001_00000101;  // rf[1] = 5
@@ -29,7 +30,7 @@ module imem (
     memory[15] = 16'b010_0_1001_0010_0011;  // add rf[2] and rf[3], write the result into rf[9]
     memory[16] = 16'b000_0_0000_1001_1001;  // store the value of rf[9] to dm[9]
     memory[17] = 16'b001_0_0000_0010_1001;  // load the value from dm[9] to rf[2]
-    memory[18] = 16'b101_01011_0000_0000;  // branch to IM[11] if rf[0] == rf[0];
+    memory[18] = 16'b101_01011_0000_0000;  // branch to IM[11] if rf[0] == rf[0]
     memory[19] = 16'b000_0_0000_1111_1111;  // store value rf[15] (rf[rf[0]] * rf[rf[1]]), to dm[15]
     memory[20] = 16'b111_1111111111111;  // stop execution (halt)
     memory[21] = 16'b0001000100000010;

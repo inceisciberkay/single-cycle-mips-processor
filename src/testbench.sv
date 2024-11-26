@@ -3,11 +3,14 @@
 module testbench ();
 
   logic clk, reset;
-  logic [ 4:0] curr_inst_addr;
-  logic [ 4:0] next_inst_addr;
+  logic [4:0] curr_inst_addr;
+  logic [4:0] next_inst_addr;
   logic [15:0] curr_inst;
-  logic [ 3:0] addr_on_dmem;
-  logic [ 7:0] data_on_dmem;
+  logic pc_branch;
+  logic [3:0] read_addr_dmem;
+  logic [7:0] read_data_dmem;
+  logic [3:0] write_addr_dmem;
+  logic [7:0] write_data_dmem;
 
   top dut (
       .clk(clk),
@@ -15,8 +18,11 @@ module testbench ();
       .curr_inst_addr(curr_inst_addr),
       .next_inst_addr(next_inst_addr),
       .curr_inst(curr_inst),
-      .addr_on_dmem(addr_on_dmem),
-      .data_on_dmem(data_on_dmem)
+      .pc_branch(pc_branch),
+      .read_addr_dmem(read_addr_dmem),
+      .read_data_dmem(read_data_dmem),
+      .write_addr_dmem(write_addr_dmem),
+      .write_data_dmem(write_data_dmem)
   );
 
   initial begin
@@ -31,7 +37,7 @@ module testbench ();
     clk   = 0;
     reset = 0;
 
-    for (int i = 0; i < 100; i++) begin
+    for (int i = 0; i < 200; i++) begin
       #5;
       clk = ~clk;
     end
