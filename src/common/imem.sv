@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 // 32x16
-module instruction_memory (
+module imem (
     input  logic [ 4:0] read_addr,
     output logic [15:0] read_data
 );

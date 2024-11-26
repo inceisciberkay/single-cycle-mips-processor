@@ -5,33 +5,33 @@ module datapath (
     input logic reset,
     input logic [15:0] curr_inst,
     input logic regW,
-    input logic [7:0] read_data_dm,
+    input logic [7:0] read_data_dmem,
     input logic mem_to_reg,
     input logic aluF,
     input logic addition,
     input logic branch,
     input logic [4:0] curr_inst_addr,
-    output logic [3:0] write_addr_dm,
+    output logic [3:0] write_addr_dmem,
     output logic [4:0] next_inst_addr,
     output logic pc_branch,
-    output logic [7:0] write_data_dm
+    output logic [7:0] write_data_dmem
 );
 
   logic immbit;
   assign immbit = curr_inst[12];
 
   logic [7:0] aluA, aluB, aluR;
-  mux2 #(4) wa_dm_mux (
+  mux2 #(4) wa_dmem_mux (
       .d0(curr_inst[7:4]),
       .d1(curr_inst[11:8]),
       .s (immbit),
-      .y (write_addr_dm)
+      .y (write_addr_dmem)
   );
-  mux2 #(8) wd_dm_mux (
+  mux2 #(8) wd_dmem_mux (
       .d0(aluB),
       .d1(curr_inst[7:0]),
       .s (immbit),
-      .y (write_data_dm)
+      .y (write_data_dmem)
   );
 
   logic zero;
@@ -64,7 +64,7 @@ module datapath (
       .y (next_inst_addr)
   );
 
-  register_file rf (
+  regfile rf (
       .clk(clk),
       .write_enable(regW),
       .reset(reset),
@@ -89,7 +89,7 @@ module datapath (
   );
   mux2 #(8) res_mux (
       .d0(aluR),
-      .d1(read_data_dm),
+      .d1(read_data_dmem),
       .s (mem_to_reg),
       .y (res_mux_out)
   );
