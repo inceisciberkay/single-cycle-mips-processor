@@ -28,6 +28,7 @@ module testbench ();
     #1;
     clk = 1;
     #1;
+    clk   = 0;
     reset = 0;
 
     for (int i = 0; i < 100; i++) begin
